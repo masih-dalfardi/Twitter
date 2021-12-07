@@ -90,3 +90,67 @@ public class Client {
     public ArrayList<Client> getFollowings() {
         return followings;
     }
+     /**
+     * Add tweet int.
+     *
+     * @param tweet the tweet
+     * @return the int
+     */
+    public int addTweet(Tweet tweet) {
+        tweets.add(tweet);
+        return 0;
+    }
+
+    /**
+     * Remove tweet int.
+     *
+     * @param tweet the tweet
+     * @return the int
+     */
+    public int removeTweet(Tweet tweet) {
+        tweets.remove(tweet);
+        return 0;
+    }
+    /**
+     * Add follower int.
+     *
+     * @param client the client
+     * @return the int
+     */
+    public int addFollower(Client client) {
+        followers.add(client);
+        return 0;
+    }
+
+    /**
+     * Add following int.
+     *
+     * @param client the client
+     * @return the int
+     */
+    public int addFollowing(Client client) {
+        followings.add(client);
+        return 0;
+    }
+
+    /**
+     * Remove follower int.
+     *
+     * @param client the client
+     * @return the int
+     */
+    public int removeFollower(Client client) {
+        followers.remove(client);
+        return 0;
+    }
+
+    /**
+     * Unfollow int.
+     *
+     * @param client the client
+     * @return the int
+     */
+    public int Unfollow(Client client) {
+        followings.remove(client);
+        return 0;
+    }
