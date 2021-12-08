@@ -54,10 +54,10 @@ public class Client {
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Client client = (Client) o;
+    public boolean equals(Client c) {
+        if (this == c) return true;
+        if (c == null || getClass() != c.getClass()) return false;
+        Client client = (Client) c;
         return Objects.equals(username, client.username);
     }
 
@@ -128,7 +128,7 @@ public class Client {
      * @param client the client
      * @return the int
      */
-    public int addFollowing(Client client) {
+    public  addFollowing(Client client) {
         followings.add(client);
         return 0;
     }
