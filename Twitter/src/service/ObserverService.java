@@ -31,3 +31,38 @@ public class ObserverService {
             return -1;
         }
     }
+ /**
+     * Unfollow int.
+     *
+     * @param client             the client
+     * @param usernameToUnfollow the username to unfollow
+     * @return the int
+     */
+    public int unfollow(Client client, String usernameToUnfollow) {
+        Optional<Client> clientOptional = clientDao.searchByUsername(usernameToUnfollow);
+        if (clientOptional.isPresent()) {
+            Client toUnfollow = clientOptional.get();
+            toUnfollow.removeFollower(client);
+            return client.Unfollow(toUnfollow);
+        } else {
+            // username does not exist!
+            return -1;
+        }
+    }
+
+    /**
+     * Gets all followings tweets.
+     *
+     * @param client the client
+     * @return the all followings tweets
+     */
+    public ArrayList<Tweet> getAllFollowingsTweets(Client client) {
+        ArrayList<Tweet> tweets = new ArrayList<>();
+        ArrayList<Client> followings = client.getFollowings();
+
+        for (Client following : followings) {
+            tweets.addAll(following.getTweets());
+        }
+        return tweets;
+    }
+}
