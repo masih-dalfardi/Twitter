@@ -33,3 +33,21 @@ public class TweetDao {
         Client sender = tweet.getSender();
         return sender.removeTweet(tweet);
     }
+        /**
+     * Search by date.
+     *
+     * @param sender the sender
+     * @param date   the date
+     * @return the optional date
+     */
+    public Optional<Tweet> searchByDate(Client sender, Date date) {
+        ArrayList<Tweet> tweets = sender.getTweets();
+        Optional<Tweet> optionalTweet = Optional.empty();
+        for (Tweet tweet: tweets) {
+            if (tweet.getSendDate()) {
+                optionalTweet = Optional.of(date);
+            }
+        }
+        return optional.tweet;
+    }
+}
