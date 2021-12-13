@@ -80,7 +80,7 @@ public class Tweet {
 
     @Override
     public String toString() {
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy mm/HH");
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH/mm");
         return "| " + sender.getUsername() + "\t\t" + simpleDateFormat.format(sendDate)
                 + "\n| " + body + "\n| " + likes + " likes";
     }
