@@ -44,10 +44,10 @@ public class TweetDao {
         ArrayList<Tweet> tweets = sender.getTweets();
         Optional<Tweet> optionalTweet = Optional.empty();
         for (Tweet tweet: tweets) {
-            if (tweet.getSendDate()) {
-                optionalTweet = Optional.of(date);
+            if (tweet.getSendDate().equals(date)) {
+                optionalTweet = Optional.of(tweet);
             }
         }
-        return optional.tweet;
+        return optionalTweet;
     }
 }
