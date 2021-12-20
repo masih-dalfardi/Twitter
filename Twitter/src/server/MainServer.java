@@ -1,44 +1,30 @@
-import java.io.IOException;
-import java.io.ObjectOutputStream;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.util.HashMap;
-import java.util.Map;
+package server;
+
+import data.User;
+import java.util.ArrayList;
+import java.util.List;
 
 
-public class Server
+public class MainServer
 {
-    private final int port = 8080;
-    private ServerSocket server;
-    private Socket socket;
-    private ObjectOutputStream writer;
-    private DataInputStream reader;
+    public static Server server;
+    public static List<User> users = new ArrayList<>();
 
-    // number of connections -> primary key for clients
-    private static int connection;
-
-    // a temp map to help connecting USER to SOCKET
-    private static Map<Integer, Socket> connections = new HashMap<>();
-
-    // to kill client thread when app gets closed
-    private static killer = new HashMap<>();
-
-    public void setKiller(TaskListener listener)
+    public static void main(String[] args) throws Exception
     {
-        killer.put(connection, listener);
-    }
+        server = new Server();
 
-    public static Map<Integer, TaskListener> getKiller()
-    {
-        return killer;
-    }
+        while (true)
+        {
+            server.waitForConnection();
 
-    // kill a thread
-    public void kill(int number) throws IOException
-    {
-        killer.get(number).kill();
-        killer.remove(number);
+            TaskListener listener = new TaskListener(server.getWriter(), server.getReader());
 
-        connections.get(number).close();
-        connections.remove(number);
+            server.setKiller(listener);
+
+            Thread thread = new Thread(listener);
+
+            thread.start();
+        }
     }
+}
