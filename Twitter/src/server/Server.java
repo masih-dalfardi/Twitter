@@ -59,3 +59,29 @@ public class Server
 
         connection ++;
         connections.put(connection, socket);
+
+        // send connection number for client
+        writer.writeObject(connection);
+
+        // Log
+        System.out.println("Logging: New client connected by code " + connection);
+    }
+
+    public ObjectOutputStream getWriter() {
+        return writer;
+    }
+
+    public DataInputStream getReader() {
+        return reader;
+    }
+
+    public Socket getSocket()
+    {
+        return socket;
+    }
+
+    public Map getConnections()
+    {
+        return connections;
+    }
+}
