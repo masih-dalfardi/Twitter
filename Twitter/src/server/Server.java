@@ -61,7 +61,7 @@ public class Server
         connections.put(connection, socket);
 
         // send connection number for client
-        writer.writeObject(connection);
+        writer.writeObject();
 
         // Log
         System.out.println("Logging: New client connected by code " + connection);
