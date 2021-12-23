@@ -35,3 +35,24 @@ public class TaskListener implements Runnable
     {
         continues = false;
     }
+        @Override
+    public void run()
+    {
+        while (continues)
+        {
+            try
+            {
+                message = reader.readUTF();
+                mapper = new JSONObject(message);
+
+                TaskHandler handler = new TaskHandler(reader, maper);
+                handler.handle();
+
+            }
+            catch (IOException | JSONException e) {} catch (Exception e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+}
