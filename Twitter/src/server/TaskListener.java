@@ -1,4 +1,37 @@
-package server;
+import java.io.DataInputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 
-public class TaskListener {
-}
+/**
+ * this runnable waits until a message come from client
+ */
+
+public class TaskListener implements Runnable
+{
+    private ObjectOutputStream writer;
+
+    public ObjectOutputStream getWriter()
+    {
+        return writer;
+    }
+
+    public DataInputStream getReader()
+    {
+        return reader;
+    }
+
+    private DataInputStream reader;
+    private String message;
+    private JSONObject mapper;
+    private boolean continues = true;
+
+    public TaskListener(ObjectOutputStream writer, DataInputStream reader)
+    {
+        this.writer = writer;
+        this.reader = reader;
+    }
+
+    public void kill()
+    {
+        continues = false;
+    }
