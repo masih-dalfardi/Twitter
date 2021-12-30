@@ -173,3 +173,33 @@ public class MainMenu
 
         return in.next();
     }
+        private void myProfile(User currUser)
+    {
+        System.out.println(currUser.getName());
+        System.out.println("-------------------------");
+        System.out.println(currUser.getBio());
+        System.out.println("-------------------------");
+
+        for(int i = 0; i < currUser.getSizeOfTweets(); i++)
+        {
+            System.out.println(currUser.getIndexOfTweet(i).getTweet());
+            System.out.println("data.Tweet ID: " + currUser.getIndexOfTweet(i).getTweetID());
+            System.out.println("Likes: " + currUser.getIndexOfTweet(i).getIsLikedSize());
+        }
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
+    private void tweet(User currUser) throws IOException
+    {
+        System.out.println("Please enter your tweet:");
+        in.nextLine();
+        String newTweet = in.nextLine();
+
+        Tweet tweet = new Tweet(newTweet);
+        currUser.addTweet(tweet);
+
+        String task = Tasks.getNewTweetTask(currUser.getName(), newTweet, tweet.getTweetID(), tweet.getDateTime());
+        App.client.getWriter().writeUTF(task);
+    }
