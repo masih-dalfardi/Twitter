@@ -122,3 +122,11 @@ public class MainMenu
         User currUser = new User(firstName, lastNAme, name, password, birth, bio);
         return currUser;
     }
+      // clear the cmd
+    private void cls()
+    {
+        for(int i = 0; i < 40; i++)
+        {
+            System.out.println();
+        }
+    }
