@@ -130,3 +130,46 @@ public class MainMenu
             System.out.println();
         }
     }
+    public void secondMenu(User currUser) throws Exception
+    {
+        while(true)
+        {
+            String action = secondMenuPrint();
+
+            switch (action)
+            {
+                case "1": return;
+
+                case "2": myProfile(currUser);
+                    break;
+                case "3": tweet(currUser);
+                    break;
+                case "4": follow(currUser);
+                    break;
+                case "5": unfollow(currUser);
+                    break;
+                case "6": followers(currUser);
+                    break;
+                case "7": followings(currUser);
+                    break;
+                case "8": timeLine(currUser);
+                    break;
+                case "9": profile();
+                    break;
+                case "10": like(currUser);
+                    break;
+                case "11": System.exit(0);
+                    break;
+            }
+        }
+    }
+
+    private String secondMenuPrint()
+    {
+        cls();
+        System.out.print("1) Logout.\n2) My Profile.\n3) data.Tweet.\n4) Follow.\n5) Unfollow.\n");
+        System.out.print("6) Followers.\n7) Following.\n8) Timeline.\n9) Profile.\n10) Like.\n11) Quit.\n");
+        System.out.println("Please enter a number:");
+
+        return in.next();
+    }
