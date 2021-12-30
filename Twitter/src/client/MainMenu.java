@@ -280,3 +280,101 @@ public class MainMenu
         in.nextLine();
     }
 
+    private void followers(User currUser)
+    {
+        for(int i = 1; i <= currUser.getFollowersSize(); i++)
+        {
+            System.out.println(i + ") " + currUser.getFollowersIndex(i-1).getName());
+        }
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
+    private void followings(User currUser)
+    {
+        for(int i = 1; i <= currUser.getFollowingsSize(); i++)
+        {
+            System.out.println(i + ") " + currUser.getFollowingsIndex(i-1).getName());
+        }
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
+    private void profile() throws IOException, ClassNotFoundException
+    {
+        System.out.println("Please enter the name of the profile you want to see.");
+        String userName = in.next();
+
+        String task = Tasks.getProfTask(userName);
+        App.client.getWriter().writeUTF(task);
+        String msg = (String) App.client.getReader().readObject();
+
+        System.out.println(msg);
+
+        if (!msg.equals("Failed !!!!"))
+        {
+            User prof = (User) App.client.getReader().readObject();
+
+            System.out.println(userName);
+
+            for (Tweet userTweet : prof.getUserTweets())
+            {
+                System.out.println(userTweet.getTweet());
+                System.out.println("data.Tweet ID: " + userTweet.getTweetID());
+                System.out.println("Likes: " + userTweet.getIsLikedSize());
+            }
+
+            System.out.println("Press enter to continue.");
+            in.nextLine();
+            in.nextLine();
+        }
+    }
+
+    private void like(User currUser) throws Exception
+    {
+        System.out.println("Please enter a tweet's ID to like.");
+        String id = in.next();
+        App.client.getWriter().writeUTF(Tasks.getLike(id, currUser.getName()));
+
+        String msg = (String) App.client.getReader().readObject();
+        System.out.println(msg);
+
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
+    private void timeLine(User currUser)
+    {
+        ArrayList<Tweet> allTweets = new ArrayList<>();
+
+        for(int i = 0; i < currUser.getSizeOfTweets(); i++)
+        {
+            allTweets.add(currUser.getIndexOfTweet(i));
+        }
+
+        for(int i = 0; i < currUser.getFollowingsSize(); i++)
+        {
+            for(int j = 0; j < currUser.getFollowingsIndex(i).getSizeOfTweets(); j++)
+            {
+                allTweets.add(currUser.getFollowingsIndex(i).getIndexOfTweet(j));
+            }
+        }
+
+        Collections.sort(allTweets);
+
+        for(int i = 0; i < allTweets.size(); i++)
+        {
+            System.out.println(allTweets.get(i).getTweet());
+            System.out.println("ID: " + allTweets.get(i).getTweetID());
+            System.out.println("Likes: " + allTweets.get(i).getIsLikedSize());
+        }
+
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
+}
