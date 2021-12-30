@@ -203,3 +203,77 @@ public class MainMenu
         String task = Tasks.getNewTweetTask(currUser.getName(), newTweet, tweet.getTweetID(), tweet.getDateTime());
         App.client.getWriter().writeUTF(task);
     }
+    private void follow(User currUser) throws IOException, ClassNotFoundException
+    {
+        System.out.println("Please enter a user name you want to follow:");
+        String userName = in.next();
+
+        if(userName.equals(currUser.getName()))
+        {
+            System.out.println("You can't follow yourself.");
+            System.out.println("Press enter to continue.");
+            in.nextLine();
+            in.nextLine();
+            return;
+        }
+
+        boolean existsInFollowings = false;
+
+        for(int i = 0; i < currUser.getFollowingsSize(); i++)
+        {
+            if(userName.equals(currUser.getFollowingsIndex(i).getName()))
+            {
+                existsInFollowings = true;
+                break;
+            }
+        }
+
+        if(existsInFollowings)
+        {
+            System.out.println("You are already following this user.");
+            System.out.println("Press enter to continue.");
+            in.nextLine();
+            in.nextLine();
+        }
+
+        if(!existsInFollowings)
+        {
+            App.client.getWriter().writeUTF(Tasks.getFollowTask(currUser.getName(), userName));
+            String message = (String) App.client.getReader().readObject();
+
+            System.out.println(message);
+
+            if(!message.equals("Failed !!!!"))
+            {
+                User followedUser = (User) App.client.getReader().readObject();
+
+                currUser.addToFollowings(followedUser);
+            }
+        }
+    }
+
+
+    private void unfollow(User currUser)
+    {
+        try
+        {
+            System.out.println("Please enter a user name you want to unfollow.");
+            String userName = in.next();
+
+            for (User following : currUser.getFollowings())
+            {
+                if(following.getName().equals(userName))
+                {
+                    currUser.getFollowings().remove(following);
+                }
+            }
+
+
+            String msg = (String) App.client.getReader().readObject();
+            System.out.println(msg);
+        } catch (Exception e) {}
+        System.out.println("Press enter to continue.");
+        in.nextLine();
+        in.nextLine();
+    }
+
