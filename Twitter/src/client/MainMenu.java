@@ -267,6 +267,9 @@ public class MainMenu
                     currUser.getFollowings().remove(following);
                 }
             }
+                        String task = Tasks.getUnfollow(currUser.getName(), userName);
+
+            App.client.getWriter().writeUTF(task);
 
 
             String msg = (String) App.client.getReader().readObject();
